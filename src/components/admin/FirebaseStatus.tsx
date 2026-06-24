@@ -57,7 +57,7 @@ export default function FirebaseStatus() {
     status === "connected" ? "green" : status === "checking" ? "gray" : "blue";
 
   return (
-    <div className="flex items-center gap-3 rounded-xl border border-border bg-surface/50 px-4 py-3">
+    <div className="flex items-center gap-3 rounded-xl border border-border bg-surface/50 px-4 py-3 dark:bg-surface/80">
       {icons[status]}
       <div className="flex-1">
         <p className="text-sm font-medium text-text">Firebase</p>

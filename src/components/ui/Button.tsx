@@ -17,13 +17,13 @@ interface ButtonProps {
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    "btn-shine bg-gradient-to-r from-primary to-accent text-white shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 border border-transparent",
+    "btn-shine bg-gradient-to-r from-primary to-accent text-white shadow-lg shadow-primary/30 hover:scale-[1.02] hover:shadow-[0_8px_32px_-6px_rgba(124,58,237,0.55)] border border-transparent",
   secondary:
-    "bg-white/80 text-text border border-border backdrop-blur hover:border-primary/40 hover:text-primary hover:shadow-md",
+    "bg-card/80 text-text border border-border backdrop-blur hover:scale-[1.02] hover:border-primary/40 hover:text-primary hover:shadow-[0_8px_24px_-8px_rgba(124,58,237,0.25)] dark:bg-card/90",
   ghost:
-    "bg-transparent text-primary border border-transparent hover:bg-primary/5",
+    "bg-transparent text-primary border border-transparent hover:scale-[1.02] hover:bg-primary/5",
   dark:
-    "btn-shine bg-text text-white border border-transparent hover:bg-ink-2 shadow-lg shadow-black/20",
+    "btn-shine bg-text text-white border border-transparent hover:scale-[1.02] hover:bg-ink-2 shadow-lg shadow-black/20 hover:shadow-[0_8px_28px_-6px_rgba(15,21,48,0.45)]",
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
@@ -43,7 +43,7 @@ export default function Button({
   disabled = false,
 }: ButtonProps) {
   const classes = cn(
-    "group/btn inline-flex items-center justify-center font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 active:scale-[0.98]",
+    "group/btn inline-flex items-center justify-center font-semibold transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 active:scale-[0.98] motion-reduce:transition-none motion-reduce:hover:scale-100",
     variantStyles[variant],
     sizeStyles[size],
     className,

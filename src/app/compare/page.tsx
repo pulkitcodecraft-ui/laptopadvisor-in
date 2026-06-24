@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import CompareClient from "@/components/compare/CompareClient";
-import SectionHeader from "@/components/ui/SectionHeader";
+import AnimatedSectionHeader from "@/components/motion/AnimatedSectionHeader";
 
 export const metadata: Metadata = {
   title: "Compare Laptops",
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function ComparePage() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:py-16">
-      <SectionHeader
+      <AnimatedSectionHeader
         eyebrow="COMPARE"
         title="Compare Laptops Side by Side"
         subtitle="Pick up to 3 laptops and compare specs, prices, and branch fit — no sponsored rankings."

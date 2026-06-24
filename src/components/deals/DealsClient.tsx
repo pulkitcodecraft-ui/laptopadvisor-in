@@ -5,6 +5,8 @@ import { Clock, ExternalLink, Tag } from "lucide-react";
 import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
+import ScrollReveal from "@/components/motion/ScrollReveal";
+import { LaptopCardSkeleton } from "@/components/ui/LaptopCardSkeleton";
 import { getActiveDeals, type Deal } from "@/lib/firebase/deals";
 import { formatIndianPrice } from "@/lib/constants";
 
@@ -23,7 +25,7 @@ export default function DealsClient() {
     return (
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {Array.from({ length: 3 }).map((_, i) => (
-          <div key={i} className="h-48 animate-pulse rounded-xl bg-surface" />
+          <LaptopCardSkeleton key={i} />
         ))}
       </div>
     );
@@ -31,8 +33,9 @@ export default function DealsClient() {
 
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {deals.map((deal) => (
-        <Card key={deal.id} hover className="flex flex-col">
+      {deals.map((deal, i) => (
+        <ScrollReveal key={deal.id} index={i}>
+          <Card hover className="flex h-full flex-col">
           <div className="mb-4 flex items-start justify-between">
             <Badge variant="green">{deal.discount}% OFF</Badge>
             <Badge variant="gray">{deal.platform}</Badge>
@@ -62,6 +65,7 @@ export default function DealsClient() {
             </Button>
           </div>
         </Card>
+        </ScrollReveal>
       ))}
     </div>
   );

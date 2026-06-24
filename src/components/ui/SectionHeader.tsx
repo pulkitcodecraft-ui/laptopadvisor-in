@@ -26,7 +26,7 @@ export default function SectionHeader({
       {eyebrow && (
         <span
           className={cn(
-            "mb-3 inline-flex items-center gap-2 rounded-full border border-primary/15 bg-primary/5 px-3 py-1 text-xs font-bold uppercase tracking-widest text-primary",
+            "mb-3 inline-flex items-center gap-2 rounded-full border border-primary/15 bg-primary/5 px-3 py-1 text-xs font-bold uppercase tracking-widest text-primary dark:border-primary/25 dark:bg-primary/10",
           )}
         >
           <span className="h-1.5 w-1.5 rounded-full bg-gradient-to-r from-primary to-accent" />

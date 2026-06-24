@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import {
   AlertTriangle,
@@ -28,14 +28,9 @@ import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import SectionHeader from "@/components/ui/SectionHeader";
 import TrustBadge from "@/components/ui/TrustBadge";
+import CountUpBadge from "@/components/ui/CountUpBadge";
 import { BRANCHES, COLLEGES, slugify } from "@/lib/constants";
-
-const fadeIn = {
-  initial: { opacity: 0, y: 24 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-80px" },
-  transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] as const },
-};
+import { scrollFadeVariants, sectionFadeVariants, motionEase } from "@/lib/motion";
 
 const STATS = [
   { value: "12+", label: "Engineering Branches" },
@@ -101,22 +96,28 @@ const COLLEGE_CITIES: Record<string, string> = {
 };
 
 export default function HomePage() {
+  const reducedMotion = useReducedMotion() ?? false;
+  const heroMotion = sectionFadeVariants(reducedMotion);
+
   return (
     <>
       {/* ---------- HERO ---------- */}
       <section className="relative -mt-[72px] overflow-hidden pt-[72px]">
         {/* aurora background */}
-        <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="bg-grid absolute inset-0 opacity-60" />
-          <div className="animate-aurora absolute -left-32 -top-24 h-[34rem] w-[34rem] rounded-full bg-primary/25 blur-[120px]" />
-          <div className="animate-float-slow absolute -right-24 top-10 h-[30rem] w-[30rem] rounded-full bg-accent/25 blur-[120px]" />
-          <div className="animate-pulse-glow absolute bottom-0 left-1/3 h-[26rem] w-[26rem] rounded-full bg-pink-400/15 blur-[120px]" />
-          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-white" />
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-hero-light dark:bg-transparent">
+          <div className="bg-grid absolute inset-0 opacity-60 dark:opacity-30" />
+          <div className="bg-hero-ambient">
+            <div className="aurora-1 animate-aurora absolute -left-32 -top-24 h-[34rem] w-[34rem] rounded-full bg-primary/25 blur-[120px] dark:bg-primary/30" />
+            <div className="aurora-2 animate-float-slow absolute -right-24 top-10 h-[30rem] w-[30rem] rounded-full bg-accent/25 blur-[120px] dark:bg-accent/25" />
+            <div className="aurora-3 animate-pulse-glow absolute bottom-0 left-1/3 h-[26rem] w-[26rem] rounded-full bg-pink-400/15 blur-[120px] dark:bg-primary/15" />
+          </div>
+          <div className="hidden dark:block absolute inset-0 bg-mesh opacity-50" />
+          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-background" />
         </div>
 
         <div className="section-container relative grid items-center gap-12 py-14 sm:py-20 lg:grid-cols-[1.1fr_0.9fr] lg:py-24">
-          <motion.div {...fadeIn}>
-            <span className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-white/70 px-3.5 py-1.5 text-xs font-semibold text-primary backdrop-blur">
+          <motion.div {...heroMotion}>
+            <span className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-card/70 px-3.5 py-1.5 text-xs font-semibold text-primary backdrop-blur dark:border-primary/25 dark:bg-card/80">
               <Sparkles className="h-3.5 w-3.5" />
               Trusted by engineering students across India
             </span>
@@ -124,7 +125,7 @@ export default function HomePage() {
             <h1 className="mt-6 text-[2.6rem] font-extrabold leading-[1.05] tracking-tight text-text sm:text-6xl lg:text-[4.2rem]">
               Find The Right
               <br className="hidden sm:block" />{" "}
-              <span className="text-gradient">Laptop</span> For Your{" "}
+              <span className="text-gradient-shimmer">Laptop</span> For Your{" "}
               <span className="relative whitespace-nowrap">
                 Branch
                 <svg
@@ -170,9 +171,17 @@ export default function HomePage() {
 
           {/* Hero visual */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.92, y: 30 }}
+            initial={
+              reducedMotion
+                ? { opacity: 1, scale: 1, y: 0 }
+                : { opacity: 0, scale: 0.92, y: 30 }
+            }
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            transition={
+              reducedMotion
+                ? { duration: 0 }
+                : { duration: 0.7, ease: motionEase }
+            }
             className="relative hidden lg:block"
           >
             <div className="animate-float relative mx-auto max-w-sm">
@@ -188,7 +197,7 @@ export default function HomePage() {
                   </span>
                 </div>
 
-                <div className="mt-5 flex h-36 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/10 via-white to-accent/10">
+                <div className="mt-5 flex h-36 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/10 via-card to-accent/10 dark:from-primary/15 dark:via-surface dark:to-accent/15">
                   <Laptop className="h-16 w-16 text-primary" strokeWidth={1.4} />
                 </div>
 
@@ -218,15 +227,18 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* floating chips */}
-              <div className="animate-float-slow absolute -left-10 top-16 rounded-2xl border border-border bg-white px-4 py-3 shadow-xl">
-                <p className="text-xs text-muted">Saved</p>
-                <p className="text-lg font-extrabold text-success">₹18,000</p>
-              </div>
-              <div className="animate-float absolute -right-8 bottom-12 rounded-2xl border border-border bg-white px-4 py-3 shadow-xl">
-                <p className="text-xs text-muted">Match score</p>
-                <p className="text-lg font-extrabold text-gradient">96%</p>
-              </div>
+              <CountUpBadge
+                label="Saved"
+                value={18000}
+                format="currency"
+                className="animate-float-slow absolute -left-10 top-16"
+              />
+              <CountUpBadge
+                label="Match score"
+                value={96}
+                format="percent"
+                className="animate-float absolute -right-8 bottom-12"
+              />
             </div>
           </motion.div>
         </div>
@@ -234,18 +246,22 @@ export default function HomePage() {
         {/* stats strip */}
         <div className="section-container relative pb-10">
           <motion.div
-            {...fadeIn}
-            className="grid grid-cols-2 gap-3 rounded-3xl border border-border bg-white/70 p-4 backdrop-blur sm:grid-cols-4 sm:p-6"
+            {...sectionFadeVariants(reducedMotion)}
+            className="grid grid-cols-2 gap-3 rounded-3xl border border-border bg-card/70 p-4 backdrop-blur sm:grid-cols-4 sm:p-6 dark:bg-card/80"
           >
-            {STATS.map((s) => (
-              <div key={s.label} className="text-center">
+            {STATS.map((s, i) => (
+              <motion.div
+                key={s.label}
+                {...scrollFadeVariants(i, reducedMotion)}
+                className="text-center"
+              >
                 <p className="text-2xl font-extrabold text-gradient sm:text-3xl">
                   {s.value}
                 </p>
                 <p className="mt-1 text-xs font-medium text-muted sm:text-sm">
                   {s.label}
                 </p>
-              </div>
+              </motion.div>
             ))}
           </motion.div>
         </div>
@@ -254,15 +270,17 @@ export default function HomePage() {
       {/* ---------- CONFUSION ---------- */}
       <section className="py-16 sm:py-24">
         <div className="section-container">
-          <motion.div {...fadeIn}>
+          <motion.div {...sectionFadeVariants(reducedMotion)}>
             <SectionHeader
               eyebrow="Common Questions"
               title="What Are You Confused About?"
               subtitle="Straight answers to the questions every engineering student asks before buying."
             />
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {CONFUSION_TOPICS.map((topic) => (
-                <Link key={topic.title} href={topic.href} className="group">
+          </motion.div>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {CONFUSION_TOPICS.map((topic, i) => (
+              <motion.div key={topic.title} {...scrollFadeVariants(i, reducedMotion)}>
+                <Link href={topic.href} className="group block h-full">
                   <Card hover className="h-full">
                     <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-primary/10 to-accent/10 transition-transform group-hover:scale-110">
                       <topic.icon className="h-5 w-5 text-primary" />
@@ -275,9 +293,9 @@ export default function HomePage() {
                     </p>
                   </Card>
                 </Link>
-              ))}
-            </div>
-          </motion.div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -285,15 +303,17 @@ export default function HomePage() {
       <section className="relative overflow-hidden border-y border-border bg-surface py-16 sm:py-24">
         <div className="bg-grid pointer-events-none absolute inset-0 opacity-40" />
         <div className="section-container relative">
-          <motion.div {...fadeIn}>
+          <motion.div {...sectionFadeVariants(reducedMotion)}>
             <SectionHeader
               eyebrow="By Branch"
               title="Choose Your Branch"
               subtitle="Every branch has different software and hardware needs. Start where you study."
             />
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {BRANCHES.map((branch) => (
-                <Link key={branch} href={`/branch/${slugify(branch)}`} className="group">
+          </motion.div>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {BRANCHES.map((branch, i) => (
+              <motion.div key={branch} {...scrollFadeVariants(i, reducedMotion)}>
+                <Link href={`/branch/${slugify(branch)}`} className="group block h-full">
                   <Card hover className="h-full">
                     <h3 className="font-bold text-text transition-colors group-hover:text-primary">
                       {branch}
@@ -307,42 +327,43 @@ export default function HomePage() {
                     </p>
                   </Card>
                 </Link>
-              ))}
-            </div>
-          </motion.div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* ---------- MISTAKES ---------- */}
       <section className="py-16 sm:py-24">
         <div className="section-container">
-          <motion.div {...fadeIn}>
+          <motion.div {...sectionFadeVariants(reducedMotion)}>
             <SectionHeader
               eyebrow="Avoid These"
               title="Students Regret These Mistakes Every Year"
               subtitle="Learn from thousands of buyers before you so you don't waste money."
             />
-            <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide lg:grid lg:grid-cols-3 lg:overflow-visible">
-              {MISTAKES.map((mistake) => (
-                <div
-                  key={mistake.title}
-                  className="group relative min-w-[280px] shrink-0 overflow-hidden rounded-2xl border border-border bg-white p-5 transition-all hover:-translate-y-1 hover:shadow-lg lg:min-w-0"
-                >
-                  <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-orange-400 to-red-400" />
-                  <div className="mb-3 flex items-center gap-2">
-                    <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-orange-50">
-                      <AlertTriangle className="h-4 w-4 text-orange-500" />
-                    </span>
-                    <Badge variant="gray">Common mistake</Badge>
-                  </div>
-                  <h3 className="font-bold text-text">{mistake.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted">
-                    {mistake.description}
-                  </p>
-                </div>
-              ))}
-            </div>
           </motion.div>
+          <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide lg:grid lg:grid-cols-3 lg:overflow-visible">
+            {MISTAKES.map((mistake, i) => (
+              <motion.div
+                key={mistake.title}
+                {...scrollFadeVariants(i, reducedMotion)}
+                className="group relative min-w-[280px] shrink-0 overflow-hidden rounded-2xl border border-border bg-card p-5 transition-all hover:-translate-y-1 hover:shadow-lg dark:hover:shadow-primary/10 lg:min-w-0"
+              >
+                <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-orange-400 to-red-400" />
+                <div className="mb-3 flex items-center gap-2">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-orange-50 dark:bg-orange-500/15">
+                    <AlertTriangle className="h-4 w-4 text-orange-500" />
+                  </span>
+                  <Badge variant="gray">Common mistake</Badge>
+                </div>
+                <h3 className="font-bold text-text">{mistake.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted">
+                  {mistake.description}
+                </p>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -350,15 +371,17 @@ export default function HomePage() {
       <section className="relative overflow-hidden border-y border-border bg-surface py-16 sm:py-24">
         <div className="bg-grid pointer-events-none absolute inset-0 opacity-40" />
         <div className="section-container relative">
-          <motion.div {...fadeIn}>
+          <motion.div {...sectionFadeVariants(reducedMotion)}>
             <SectionHeader
               eyebrow="By College"
               title="Find Your College's Laptop Guide"
               subtitle="Campus-specific advice from labs, software requirements, and senior recommendations."
             />
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {COLLEGES.map((college) => (
-                <Link key={college} href={`/college/${slugify(college)}`} className="group">
+          </motion.div>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {COLLEGES.map((college, i) => (
+              <motion.div key={college} {...scrollFadeVariants(i, reducedMotion)}>
+                <Link href={`/college/${slugify(college)}`} className="group block h-full">
                   <Card hover className="flex h-full items-center justify-between">
                     <div>
                       <h3 className="font-bold text-text">{college}</h3>
@@ -371,9 +394,9 @@ export default function HomePage() {
                     </span>
                   </Card>
                 </Link>
-              ))}
-            </div>
-          </motion.div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -382,7 +405,7 @@ export default function HomePage() {
         <div className="bg-mesh absolute inset-0" />
         <div className="bg-grid-dark absolute inset-0 opacity-40" />
         <div className="section-container relative text-center">
-          <motion.div {...fadeIn}>
+          <motion.div {...heroMotion}>
             <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-xs font-semibold text-white backdrop-blur">
               <Sparkles className="h-3.5 w-3.5" />
               2-minute personalised quiz

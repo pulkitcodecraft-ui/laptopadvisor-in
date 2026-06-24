@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { AuthProvider } from "@/lib/firebase/AuthProvider";
+import ThemeProvider from "@/components/theme/ThemeProvider";
 import "./globals.css";
 
 const inter = Inter({
@@ -63,7 +64,10 @@ export const metadata: Metadata = {
 export const viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#2563EB",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0B0A14" },
+  ],
 };
 
 export default function RootLayout({
@@ -72,13 +76,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} h-full scroll-smooth`}>
-      <body className="flex min-h-full flex-col bg-background font-sans text-text antialiased">
-        <AuthProvider>
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </AuthProvider>
+    <html
+      lang="en"
+      className={`${inter.variable} h-full scroll-smooth`}
+      data-scroll-behavior="smooth"
+      suppressHydrationWarning
+    >
+      <body className="flex min-h-full flex-col bg-background font-sans text-text antialiased transition-colors duration-200">
+        <ThemeProvider>
+          <AuthProvider>
+            <Navbar />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

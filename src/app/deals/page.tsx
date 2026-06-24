@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import DealsClient from "@/components/deals/DealsClient";
-import SectionHeader from "@/components/ui/SectionHeader";
+import AnimatedSectionHeader from "@/components/motion/AnimatedSectionHeader";
 
 export const metadata: Metadata = {
   title: "Current Laptop Deals",
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function DealsPage() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:py-16">
-      <SectionHeader
+      <AnimatedSectionHeader
         eyebrow="DEALS"
         title="Current Laptop Deals"
         subtitle="Hand-picked deals for students. Prices change fast — always verify on the retailer site before buying."

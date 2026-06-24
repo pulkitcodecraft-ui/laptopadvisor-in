@@ -73,27 +73,27 @@ export default function ImageUpload({
   );
 
   return (
-    <div className="rounded-xl border border-dashed border-border bg-surface/50 p-6">
+    <div className="rounded-xl border border-dashed border-border bg-surface/50 p-6 dark:bg-surface/80">
       {preview ? (
-        <div className="relative mb-4 aspect-video overflow-hidden rounded-lg bg-white">
+        <div className="relative mb-4 aspect-video overflow-hidden rounded-lg bg-card">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={preview} alt="Preview" className="h-full w-full object-contain p-4" />
           <button
             type="button"
             onClick={() => setPreview(null)}
-            className="absolute right-2 top-2 rounded-full bg-white p-1.5 shadow-sm"
+            className="absolute right-2 top-2 rounded-full bg-card p-1.5 shadow-sm dark:bg-surface"
           >
             <X className="h-4 w-4 text-muted" />
           </button>
         </div>
       ) : (
-        <div className="mb-4 flex aspect-video flex-col items-center justify-center rounded-lg bg-white">
+        <div className="mb-4 flex aspect-video flex-col items-center justify-center rounded-lg bg-card">
           <ImageIcon className="h-10 w-10 text-muted/50" />
           <p className="mt-2 text-sm text-muted">No image uploaded</p>
         </div>
       )}
 
-      <label className="flex cursor-pointer flex-col items-center gap-2 rounded-lg border border-border bg-white px-4 py-6 transition-colors hover:border-primary hover:bg-primary/5">
+      <label className="flex cursor-pointer flex-col items-center gap-2 rounded-lg border border-border bg-card px-4 py-6 transition-colors hover:border-primary hover:bg-primary/5 dark:hover:bg-primary/10">
         <Upload className="h-5 w-5 text-primary" />
         <span className="text-sm font-medium text-text">
           {uploading ? `Uploading… ${progress}%` : "Choose image (JPG, PNG, WebP)"}

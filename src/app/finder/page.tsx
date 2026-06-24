@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { ArrowLeft, Check } from "lucide-react";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
@@ -74,6 +74,7 @@ const STEPS = [
 
 export default function FinderPage() {
   const router = useRouter();
+  const reducedMotion = useReducedMotion() ?? false;
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Answers>(INITIAL_ANSWERS);
   const [isLoading, setIsLoading] = useState(false);
@@ -175,10 +176,10 @@ export default function FinderPage() {
       <AnimatePresence mode="wait">
         <motion.div
           key={step}
-          initial={{ opacity: 0, x: 20 }}
+          initial={reducedMotion ? false : { opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -20 }}
-          transition={{ duration: 0.3 }}
+          exit={reducedMotion ? undefined : { opacity: 0, x: -20 }}
+          transition={{ duration: reducedMotion ? 0 : 0.3, ease: [0.22, 1, 0.36, 1] }}
         >
           <h1 className="text-2xl font-bold tracking-tight text-text sm:text-3xl">
             {currentStep.title}

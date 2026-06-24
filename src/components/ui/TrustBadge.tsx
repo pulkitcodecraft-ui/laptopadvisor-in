@@ -18,7 +18,7 @@ export default function TrustBadge() {
       {TRUST_ITEMS.map(({ icon: Icon, label }) => (
         <div
           key={label}
-          className="flex items-center gap-2.5 rounded-2xl border border-border bg-white/70 px-3.5 py-3 backdrop-blur transition-colors hover:border-primary/25"
+          className="flex items-center gap-2.5 rounded-2xl border border-border bg-card/70 px-3.5 py-3 backdrop-blur transition-colors hover:border-primary/25 dark:bg-card/80"
         >
           <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary/10 to-accent/10">
             <Icon className="h-4 w-4 text-primary" />

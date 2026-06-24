@@ -1,13 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { X } from "lucide-react";
 import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import LaptopCard from "@/components/ui/LaptopCard";
+import { LaptopCardSkeleton } from "@/components/ui/LaptopCardSkeleton";
 import { getLaptops, type Laptop } from "@/lib/firebase/laptops";
 import { formatIndianPrice } from "@/lib/constants";
+import { scrollFadeVariants } from "@/lib/motion";
+import ScrollReveal from "@/components/motion/ScrollReveal";
 
 const SPEC_LABELS: { key: keyof Laptop["specs"]; label: string }[] = [
   { key: "processor", label: "Processor" },
@@ -20,6 +24,7 @@ const SPEC_LABELS: { key: keyof Laptop["specs"]; label: string }[] = [
 ];
 
 export default function CompareClient() {
+  const reducedMotion = useReducedMotion() ?? false;
   const [laptops, setLaptops] = useState<Laptop[]>([]);
   const [selected, setSelected] = useState<Laptop[]>([]);
   const [loading, setLoading] = useState(true);
@@ -43,11 +48,8 @@ export default function CompareClient() {
   if (loading) {
     return (
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {Array.from({ length: 3 }).map((_, i) => (
-          <div
-            key={i}
-            className="h-80 animate-pulse rounded-xl bg-surface"
-          />
+        {Array.from({ length: 6 }).map((_, i) => (
+          <LaptopCardSkeleton key={i} />
         ))}
       </div>
     );
@@ -56,6 +58,7 @@ export default function CompareClient() {
   return (
     <div className="space-y-10">
       {selected.length > 0 && (
+        <ScrollReveal variant="section">
         <Card className="overflow-x-auto">
           <div className="mb-4 flex items-center justify-between">
             <h3 className="font-semibold text-text">
@@ -119,6 +122,7 @@ export default function CompareClient() {
             </tbody>
           </table>
         </Card>
+        </ScrollReveal>
       )}
 
       <div>
@@ -126,13 +130,14 @@ export default function CompareClient() {
           Select up to 3 laptops to compare ({selected.length}/3 selected)
         </p>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {laptops.map((laptop) => {
+          {laptops.map((laptop, i) => {
             const isSelected = selected.some((l) => l.id === laptop.id);
             const isDisabled = !isSelected && selected.length >= 3;
 
             return (
-              <div
+              <motion.div
                 key={laptop.id}
+                {...scrollFadeVariants(i, reducedMotion)}
                 role="button"
                 tabIndex={0}
                 onClick={() => !isDisabled && toggleLaptop(laptop)}
@@ -153,13 +158,16 @@ export default function CompareClient() {
                     tags={laptop.tags}
                     affiliateUrl={laptop.affiliateUrl}
                     isRecommended={laptop.isRecommended}
+                    specs={laptop.specs}
+                    showCompareLink={false}
+                    selectionMode
                   />
                 {isSelected && (
                   <Badge variant="blue" className="absolute right-4 top-4 z-10">
                     Selected
                   </Badge>
                 )}
-              </div>
+              </motion.div>
             );
           })}
         </div>

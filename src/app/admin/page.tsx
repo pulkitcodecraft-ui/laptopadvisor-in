@@ -125,7 +125,7 @@ export default function AdminPage() {
           <p className="text-sm text-muted">
             Manage laptops, deals, and reviews via Firebase Console or extend
             this panel with CRUD forms. Security rules are in{" "}
-            <code className="rounded bg-surface px-1.5 py-0.5 text-xs">
+            <code className="rounded bg-surface px-1.5 py-0.5 text-xs dark:bg-surface/80">
               src/lib/firebase/firestore.rules
             </code>
             .

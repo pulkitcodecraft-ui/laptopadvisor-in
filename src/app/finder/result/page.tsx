@@ -5,9 +5,12 @@ import { useSearchParams } from "next/navigation";
 import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
-import SectionHeader from "@/components/ui/SectionHeader";
+import LaptopCard from "@/components/ui/LaptopCard";
+import AnimatedSectionHeader from "@/components/motion/AnimatedSectionHeader";
+import ScrollReveal from "@/components/motion/ScrollReveal";
 import { BUDGET_RANGES } from "@/lib/constants";
 import { getBranchBySlug } from "@/lib/branchData";
+import { findLaptopByName } from "@/lib/sampleLaptops";
 
 function FinderResultContent() {
   const searchParams = useSearchParams();
@@ -25,69 +28,79 @@ function FinderResultContent() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
-      <SectionHeader
+      <AnimatedSectionHeader
         eyebrow="YOUR RESULTS"
         title="Here's What We Recommend"
         subtitle="Based on your answers, these laptops and tips match your profile. Always verify current prices before buying."
       />
 
-      <Card className="mb-8">
-        <h3 className="font-semibold text-text">Your preferences</h3>
-        <div className="mt-4 flex flex-wrap gap-2">
-          {budgetLabel && <Badge variant="blue">Budget: {budgetLabel}</Badge>}
-          {branch && <Badge variant="purple">Branch: {branch.name}</Badge>}
-          {gaming && <Badge variant="gray">Gaming: {gaming}</Badge>}
-          {aiMl && <Badge variant="gray">AI/ML: {aiMl}</Badge>}
-          {platform && <Badge variant="gray">Platform: {platform}</Badge>}
-          {portability && (
-            <Badge variant="gray">Portability: {portability}</Badge>
-          )}
-        </div>
-      </Card>
+      <ScrollReveal index={0}>
+        <Card className="mb-8">
+          <h3 className="font-semibold text-text">Your preferences</h3>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {budgetLabel && <Badge variant="blue">Budget: {budgetLabel}</Badge>}
+            {branch && <Badge variant="purple">Branch: {branch.name}</Badge>}
+            {gaming && <Badge variant="gray">Gaming: {gaming}</Badge>}
+            {aiMl && <Badge variant="gray">AI/ML: {aiMl}</Badge>}
+            {platform && <Badge variant="gray">Platform: {platform}</Badge>}
+            {portability && (
+              <Badge variant="gray">Portability: {portability}</Badge>
+            )}
+          </div>
+        </Card>
+      </ScrollReveal>
 
       {branch ? (
         <>
-          <p className="mb-6 text-muted">{branch.seniorTip}</p>
+          <ScrollReveal index={1}>
+            <p className="mb-6 text-muted">{branch.seniorTip}</p>
+          </ScrollReveal>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {branch.recommendedLaptops.map((laptop) => (
-              <Card key={laptop.name} className="flex flex-col">
-                <Badge variant="green" className="mb-3 w-fit">
-                  {laptop.priceRange}
-                </Badge>
-                <h3 className="text-lg font-semibold text-text">
-                  {laptop.name}
-                </h3>
-                <p className="mt-2 flex-1 text-sm text-muted">
-                  {laptop.reason}
-                </p>
-                <div className="mt-4">
-                  <Button href={laptop.affiliateUrl} variant="secondary" className="w-full">
-                    Check Price on Amazon
-                  </Button>
-                </div>
-              </Card>
-            ))}
+            {branch.recommendedLaptops.map((laptop, index) => {
+              const sample = findLaptopByName(laptop.name);
+              return (
+                <ScrollReveal key={laptop.name} index={index + 2}>
+                  <LaptopCard
+                    name={laptop.name}
+                    brand={sample?.brand ?? laptop.name.split(" ")[0]}
+                    price={sample?.price ?? 0}
+                    priceLabel={sample?.price ? undefined : laptop.priceRange}
+                    image={sample?.image ?? ""}
+                    rating={sample?.rating ?? 4.3}
+                    tags={sample?.tags ?? [laptop.priceRange]}
+                    affiliateUrl={laptop.affiliateUrl}
+                    isRecommended={index === 0}
+                    specs={sample?.specs}
+                    description={laptop.reason}
+                  />
+                </ScrollReveal>
+              );
+            })}
           </div>
         </>
       ) : (
-        <Card>
-          <p className="text-muted">
-            We couldn&apos;t match your branch. Try the quiz again or browse
-            branch guides directly.
-          </p>
-        </Card>
+        <ScrollReveal index={1}>
+          <Card>
+            <p className="text-muted">
+              We couldn&apos;t match your branch. Try the quiz again or browse
+              branch guides directly.
+            </p>
+          </Card>
+        </ScrollReveal>
       )}
 
-      <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-        <Button href="/finder" variant="secondary">
-          Retake Quiz
-        </Button>
-        {branch && (
-          <Button href={`/branch/${branch.slug}`}>
-            Read Full {branch.name} Guide →
+      <ScrollReveal index={5}>
+        <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+          <Button href="/finder" variant="secondary">
+            Retake Quiz
           </Button>
-        )}
-      </div>
+          {branch && (
+            <Button href={`/branch/${branch.slug}`}>
+              Read Full {branch.name} Guide →
+            </Button>
+          )}
+        </div>
+      </ScrollReveal>
     </div>
   );
 }

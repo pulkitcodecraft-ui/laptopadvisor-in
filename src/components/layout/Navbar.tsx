@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { Laptop, Menu, X, ArrowRight } from "lucide-react";
 import { NAV_LINKS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import ThemeToggle from "@/components/theme/ThemeToggle";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -34,7 +35,7 @@ export default function Navbar() {
       className={cn(
         "sticky top-0 z-50 transition-all duration-300",
         scrolled
-          ? "border-b border-border/70 bg-white/75 backdrop-blur-xl backdrop-saturate-150"
+          ? "border-b border-border/70 bg-background/75 backdrop-blur-xl backdrop-saturate-150 dark:bg-background/80"
           : "border-b border-transparent bg-transparent",
       )}
     >
@@ -78,7 +79,8 @@ export default function Navbar() {
           })}
         </ul>
 
-        <div className="hidden md:block">
+        <div className="hidden items-center gap-3 md:flex">
+          <ThemeToggle />
           <Link
             href="/finder"
             className="btn-shine group inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-primary to-accent px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-primary/30 transition-all hover:shadow-xl hover:shadow-primary/40"
@@ -88,15 +90,18 @@ export default function Navbar() {
           </Link>
         </div>
 
-        <button
-          type="button"
-          className="relative z-50 inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border/70 bg-white/70 text-text backdrop-blur md:hidden"
-          onClick={() => setIsOpen((open) => !open)}
-          aria-expanded={isOpen}
-          aria-label={isOpen ? "Close menu" : "Open menu"}
-        >
-          {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle />
+          <button
+            type="button"
+            className="relative z-50 inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border/70 bg-card/70 text-text backdrop-blur"
+            onClick={() => setIsOpen((open) => !open)}
+            aria-expanded={isOpen}
+            aria-label={isOpen ? "Close menu" : "Open menu"}
+          >
+            {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
       </nav>
 
       {/* Mobile full-screen menu */}

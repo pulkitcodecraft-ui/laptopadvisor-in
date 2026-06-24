@@ -374,6 +374,253 @@ export const BRANCH_DATA: BranchGuide[] = [
       },
     ],
   },
+  {
+    name: "Chemical",
+    slug: "chemical",
+    description:
+      "Chemical engineering students run process simulators, MATLAB, and Aspen Plus alongside data-heavy coursework. Moderate compute needs, but multitasking between spreadsheets, simulations, and reports demands reliable RAM.",
+    recommendedOS: "Windows",
+    macRecommended: false,
+    macNote:
+      "Aspen Plus, HYSYS, and many plant-design tools are Windows-first. Mac support is limited for core chemical engineering software.",
+    softwareUsed: [
+      "Aspen Plus",
+      "MATLAB",
+      "Excel",
+      "Python",
+      "ChemCAD",
+      "COMSOL",
+    ],
+    typicalUsage:
+      "You'll model chemical processes, solve numerical problems in MATLAB, and submit lab reports. Simulation runs can take time — a stable laptop with 16GB RAM handles semester workload better than a thin ultrabook.",
+    gamingCompatibility: "Not Needed",
+    batteryImportance: "Important",
+    commonMistakes: [
+      "Buying 8GB RAM — Aspen and MATLAB together will freeze during assignments.",
+      "Choosing Mac without checking if your college licenses Windows-only simulators.",
+      "Ignoring SSD speed — large simulation files load painfully on HDDs.",
+    ],
+    seniorTip:
+      "16GB RAM and 512GB SSD are the practical baseline. You don't need a gaming GPU unless you also game — integrated graphics is fine for most chemical eng software.",
+    recommendedLaptops: [
+      {
+        name: "Lenovo IdeaPad Slim 5",
+        reason: "Balanced specs for MATLAB and simulation at a student price.",
+        priceRange: "₹55,000–₹65,000",
+        affiliateUrl: "https://www.amazon.in",
+      },
+      {
+        name: "HP Pavilion 15",
+        reason: "Reliable all-rounder with good service network.",
+        priceRange: "₹50,000–₹60,000",
+        affiliateUrl: "https://www.amazon.in",
+      },
+      {
+        name: "ASUS Vivobook 15",
+        reason: "Budget-friendly option for everyday chemical eng coursework.",
+        priceRange: "₹45,000–₹55,000",
+        affiliateUrl: "https://www.amazon.in",
+      },
+    ],
+  },
+  {
+    name: "Engineering Physics",
+    slug: "engineering-physics",
+    description:
+      "Engineering physics blends programming, numerical methods, and research-oriented computing. Python and MATLAB dominate, with occasional simulation and data analysis workloads.",
+    recommendedOS: "Both",
+    macRecommended: true,
+    macNote:
+      "MacBooks work well for Python and research workflows. Verify lab software requirements — some instrumentation tools may need Windows.",
+    softwareUsed: [
+      "Python",
+      "MATLAB",
+      "Jupyter",
+      "LaTeX",
+      "Origin",
+      "COMSOL",
+      "VS Code",
+    ],
+    typicalUsage:
+      "Coding assignments, numerical simulations, and research projects fill most of your screen time. Battery life matters for library and lab sessions; raw GPU power is rarely essential unless you specialize in compute-heavy research.",
+    gamingCompatibility: "Limited",
+    batteryImportance: "Important",
+    commonMistakes: [
+      "Overspending on GPU when your coursework is mostly CPU-bound Python.",
+      "Skipping 16GB RAM — Jupyter, browser tabs, and MATLAB add up fast.",
+      "Choosing a heavy gaming laptop you'll carry to labs daily.",
+    ],
+    seniorTip:
+      "A lightweight laptop with 16GB RAM, good keyboard, and all-day battery beats a bulky workstation. Linux-friendly hardware is a bonus if your lab uses open-source stacks.",
+    recommendedLaptops: [
+      {
+        name: "Apple MacBook Air M2",
+        reason: "Excellent for Python, research writing, and long battery life.",
+        priceRange: "₹90,000–₹1,10,000",
+        affiliateUrl: "https://www.amazon.in",
+      },
+      {
+        name: "Lenovo ThinkPad E14",
+        reason: "Durable, Linux-friendly, and great for daily lab carry.",
+        priceRange: "₹55,000–₹70,000",
+        affiliateUrl: "https://www.amazon.in",
+      },
+      {
+        name: "Lenovo IdeaPad Slim 5",
+        reason: "Strong value for MATLAB and Python workloads.",
+        priceRange: "₹55,000–₹65,000",
+        affiliateUrl: "https://www.amazon.in",
+      },
+    ],
+  },
+  {
+    name: "Aerospace",
+    slug: "aerospace",
+    description:
+      "Aerospace engineering means CAD, CFD, and FEA tools like CATIA and ANSYS. These workloads need dedicated GPU power, strong cooling, and enough RAM for large mesh files.",
+    recommendedOS: "Windows",
+    macRecommended: false,
+    macNote:
+      "CATIA, ANSYS Fluent, and most aerospace CAD/CFD stacks are Windows-native. Mac is not practical unless your college provides lab access for all heavy tools.",
+    softwareUsed: [
+      "CATIA",
+      "ANSYS",
+      "MATLAB",
+      "SolidWorks",
+      "OpenVSP",
+      "Python",
+    ],
+    typicalUsage:
+      "You'll design components, run aerodynamic simulations, and submit analysis reports. Simulation sessions push CPU and GPU hard — expect fan noise and heat during project deadlines.",
+    gamingCompatibility: "Good",
+    batteryImportance: "Moderate",
+    commonMistakes: [
+      "Buying an ultrabook without dedicated GPU — CFD and CAD will struggle.",
+      "Ignoring thermals — thin laptops throttle under ANSYS loads.",
+      "Choosing 8GB RAM — mesh files and multitasking need 16GB minimum.",
+    ],
+    seniorTip:
+      "RTX 3050/4050 with 16GB RAM is the practical floor for aerospace coursework. Use college labs for the heaviest simulations if budget is tight.",
+    recommendedLaptops: [
+      {
+        name: "HP Victus 15",
+        reason: "Dedicated GPU for CAD and simulation at a student price.",
+        priceRange: "₹60,000–₹75,000",
+        affiliateUrl: "https://www.amazon.in",
+      },
+      {
+        name: "Lenovo LOQ 15",
+        reason: "Good thermals for long ANSYS sessions.",
+        priceRange: "₹70,000–₹85,000",
+        affiliateUrl: "https://www.amazon.in",
+      },
+      {
+        name: "Dell G15",
+        reason: "Reliable build with strong service network in India.",
+        priceRange: "₹65,000–₹80,000",
+        affiliateUrl: "https://www.amazon.in",
+      },
+    ],
+  },
+  {
+    name: "Architecture",
+    slug: "architecture",
+    description:
+      "Architecture students live in Revit, SketchUp, Lumion, and Photoshop. Display quality, color accuracy, and GPU performance matter as much as portability for design reviews and studio work.",
+    recommendedOS: "Windows",
+    macRecommended: false,
+    macNote:
+      "Revit and Lumion are Windows-first. Mac can work for SketchUp and presentation work, but most Indian architecture programs expect Windows for core studio software.",
+    softwareUsed: [
+      "Revit",
+      "SketchUp",
+      "AutoCAD",
+      "Lumion",
+      "Photoshop",
+      "Rhino",
+    ],
+    typicalUsage:
+      "You'll model buildings, render walkthroughs, and present boards. Large project files and real-time rendering eat RAM and GPU. A good display reduces eye strain during long studio nights.",
+    gamingCompatibility: "Limited",
+    batteryImportance: "Important",
+    commonMistakes: [
+      "Buying a 13-inch screen — architectural drawings need space.",
+      "Skipping dedicated GPU — Lumion and Enscape need it for smooth previews.",
+      "Choosing sRGB-only panels when color-accurate displays help for presentations.",
+    ],
+    seniorTip:
+      "15–16 inch screen, 16GB RAM minimum, RTX 3050 or better, and 512GB+ SSD. Prioritize display size and GPU over ultra-lightweight design — studio work is visual.",
+    recommendedLaptops: [
+      {
+        name: "ASUS VivoBook Pro 15",
+        reason: "OLED display and dedicated GPU for Revit and rendering.",
+        priceRange: "₹65,000–₹80,000",
+        affiliateUrl: "https://www.amazon.in",
+      },
+      {
+        name: "HP Victus 15",
+        reason: "Strong GPU for Lumion at a reasonable student price.",
+        priceRange: "₹60,000–₹75,000",
+        affiliateUrl: "https://www.amazon.in",
+      },
+      {
+        name: "Lenovo LOQ 15",
+        reason: "Large screen and good thermals for long studio sessions.",
+        priceRange: "₹70,000–₹85,000",
+        affiliateUrl: "https://www.amazon.in",
+      },
+    ],
+  },
+  {
+    name: "Biotechnology",
+    slug: "biotechnology",
+    description:
+      "Biotech students use R, Python, bioinformatics tools, and statistical software for data analysis. RAM and storage matter more than GPU for most coursework.",
+    recommendedOS: "Both",
+    macRecommended: true,
+    macNote:
+      "MacBooks handle Python and R workflows smoothly. Windows is fine too — check if your lab uses Windows-only instrumentation software.",
+    softwareUsed: [
+      "R",
+      "Python",
+      "Jupyter",
+      "BLAST",
+      "Excel",
+      "GraphPad",
+      "MATLAB",
+    ],
+    typicalUsage:
+      "Data analysis, lab report writing, and running bioinformatics pipelines form the core workload. Multiple datasets and browser-based tools open together — 16GB RAM keeps things smooth.",
+    gamingCompatibility: "Not Needed",
+    batteryImportance: "Important",
+    commonMistakes: [
+      "Buying 8GB RAM — R and Python with medium datasets will swap constantly.",
+      "Prioritizing gaming GPU over RAM and SSD.",
+      "Choosing a laptop with poor battery for long lab and library sessions.",
+    ],
+    seniorTip:
+      "16GB RAM, fast SSD, and a comfortable keyboard beat expensive graphics. Mac or Windows both work — pick based on what your lab standardizes on.",
+    recommendedLaptops: [
+      {
+        name: "Lenovo IdeaPad Slim 5",
+        reason: "16GB RAM ideal for R and Python data analysis.",
+        priceRange: "₹55,000–₹65,000",
+        affiliateUrl: "https://www.amazon.in",
+      },
+      {
+        name: "Apple MacBook Air M2",
+        reason: "Silent and reliable for research and writing-heavy semesters.",
+        priceRange: "₹90,000–₹1,10,000",
+        affiliateUrl: "https://www.amazon.in",
+      },
+      {
+        name: "ASUS Vivobook 15",
+        reason: "Budget option that handles biotech software adequately.",
+        priceRange: "₹45,000–₹55,000",
+        affiliateUrl: "https://www.amazon.in",
+      },
+    ],
+  },
 ];
 
 export function getBranchBySlug(slug: string): BranchGuide | undefined {
