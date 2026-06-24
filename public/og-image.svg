@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2563EB;stop-opacity:0.08"/>
+      <stop offset="100%" style="stop-color:#7C3AED;stop-opacity:0.05"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="#FFFFFF"/>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <text x="80" y="280" font-family="system-ui,sans-serif" font-size="52" font-weight="700" fill="#0F172A">Engineering Laptop</text>
+  <text x="80" y="350" font-family="system-ui,sans-serif" font-size="52" font-weight="700" fill="#2563EB">Advisor India</text>
+  <text x="80" y="420" font-family="system-ui,sans-serif" font-size="24" fill="#64748B">Find the right laptop for your branch &amp; budget</text>
+  <rect x="80" y="480" width="280" height="56" rx="8" fill="#2563EB"/>
+  <text x="220" y="515" text-anchor="middle" font-family="system-ui,sans-serif" font-size="18" font-weight="600" fill="#FFFFFF">LaptopAdvisor.in</text>
+</svg>
