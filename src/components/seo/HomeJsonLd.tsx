@@ -1,5 +1,7 @@
+import { getSiteUrl } from "@/lib/siteUrl";
+
 export function HomeJsonLd() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://laptopadvisor.in";
+  const siteUrl = getSiteUrl();
 
   const websiteSchema = {
     "@context": "https://schema.org",

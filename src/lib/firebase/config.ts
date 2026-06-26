@@ -68,7 +68,11 @@ function initFirebase() {
   storage = getStorage(app);
 
   if (firebaseConfig.measurementId && !isFirebaseEmulator()) {
-    analytics = getAnalytics(app);
+    try {
+      analytics = getAnalytics(app);
+    } catch {
+      analytics = null;
+    }
   }
 
   connectEmulators(app);
