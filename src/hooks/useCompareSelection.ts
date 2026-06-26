@@ -4,8 +4,9 @@ import { useCallback, useSyncExternalStore } from "react";
 import {
   COMPARE_STORAGE_KEY,
   clearCompareIds,
+  EMPTY_COMPARE_IDS,
+  getCompareIdsSnapshot,
   MAX_COMPARE_LAPTOPS,
-  readCompareIds,
   toggleCompareId,
 } from "@/lib/compareSelection";
 
@@ -28,8 +29,8 @@ function subscribeCompareIds(onStoreChange: () => void) {
 export function useCompareSelection() {
   const ids = useSyncExternalStore(
     subscribeCompareIds,
-    readCompareIds,
-    () => [],
+    getCompareIdsSnapshot,
+    () => EMPTY_COMPARE_IDS,
   );
 
   const hydrated = useSyncExternalStore(
