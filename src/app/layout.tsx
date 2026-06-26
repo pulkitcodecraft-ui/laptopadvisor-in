@@ -1,15 +1,18 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { AuthProvider } from "@/lib/firebase/AuthProvider";
+import MobileTabBar from "@/components/layout/MobileTabBar";
 import ThemeProvider from "@/components/theme/ThemeProvider";
 import "./globals.css";
 
-const inter = Inter({
+const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-jakarta",
   display: "swap",
+  weight: ["400", "500", "600", "700", "800"],
+  preload: true,
+  adjustFontFallback: true,
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://laptopadvisor.in";
@@ -64,6 +67,7 @@ export const metadata: Metadata = {
 export const viewport = {
   width: "device-width",
   initialScale: 1,
+  viewportFit: "cover",
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
     { media: "(prefers-color-scheme: dark)", color: "#0B0A14" },
@@ -78,17 +82,21 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} h-full scroll-smooth`}
+      className={`${plusJakarta.variable} h-full scroll-smooth`}
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
-      <body className="flex min-h-full flex-col bg-background font-sans text-text antialiased transition-colors duration-200">
+      <body
+        className="flex min-h-full flex-col bg-background font-sans text-base text-text antialiased transition-colors duration-200"
+        suppressHydrationWarning
+      >
         <ThemeProvider>
-          <AuthProvider>
             <Navbar />
-            <main className="flex-1">{children}</main>
+            <main className="flex-1 pb-[calc(4.75rem+env(safe-area-inset-bottom,0px))] md:pb-0">
+              {children}
+            </main>
             <Footer />
-          </AuthProvider>
+            <MobileTabBar />
         </ThemeProvider>
       </body>
     </html>

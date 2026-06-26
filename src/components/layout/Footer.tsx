@@ -1,99 +1,68 @@
 import Link from "next/link";
-import { Laptop } from "lucide-react";
-import { BRANCHES, COLLEGES, slugify } from "@/lib/constants";
+import { ArrowRight, Laptop } from "lucide-react";
 
-const RESOURCES = [
-  { label: "Find My Laptop", href: "/finder" },
-  { label: "Compare Laptops", href: "/compare" },
-  { label: "Current Deals", href: "/deals" },
-  { label: "Buying Guides", href: "/guides" },
-];
-
-const ABOUT = [
-  { label: "About Us", href: "/about" },
-  { label: "Contact", href: "/contact" },
-  { label: "Privacy Policy", href: "/privacy" },
-  { label: "Affiliate Disclosure", href: "/disclosure" },
-];
-
-function LinkColumn({
-  title,
-  links,
-}: {
-  title: string;
-  links: { label: string; href: string }[];
-}) {
-  return (
-    <div>
-      <h3 className="mb-4 text-xs font-bold uppercase tracking-widest text-white/40">
-        {title}
-      </h3>
-      <ul className="space-y-2.5">
-        {links.map((item) => (
-          <li key={item.href}>
-            <Link
-              href={item.href}
-              className="text-sm text-white/70 transition-colors hover:text-white"
-            >
-              {item.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
+const FOOTER_LINKS = [
+  { label: "Browse Laptops", href: "/laptops/" },
+  { label: "Compare", href: "/compare/" },
+  { label: "Guides", href: "/guides/" },
+  { label: "Contact", href: "/contact/" },
+  { label: "Privacy", href: "/privacy/" },
+] as const;
 
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden bg-ink text-white">
-      <div className="bg-grid-dark pointer-events-none absolute inset-0 opacity-30" />
-      <div className="pointer-events-none absolute -left-32 -top-32 h-96 w-96 rounded-full bg-primary/20 blur-[120px]" />
-      <div className="pointer-events-none absolute -bottom-32 right-0 h-96 w-96 rounded-full bg-accent/20 blur-[120px]" />
+    <footer className="relative overflow-hidden border-t border-white/5 bg-ink text-white">
+      <div className="bg-grid-dark pointer-events-none absolute inset-0 opacity-20" />
+      <div className="pointer-events-none absolute -left-24 top-0 h-72 w-72 rounded-full bg-primary/15 blur-[100px]" />
+      <div className="pointer-events-none absolute -right-24 bottom-0 h-72 w-72 rounded-full bg-accent/10 blur-[100px]" />
 
-      <div className="relative mx-auto max-w-6xl px-5 py-16 sm:px-6 lg:px-8">
-        <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr]">
-          <div className="col-span-2 lg:col-span-1">
-            <Link href="/" className="flex items-center gap-2.5">
-              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent shadow-lg shadow-primary/30">
-                <Laptop className="h-5 w-5 text-white" />
-              </span>
-              <span className="text-lg font-extrabold tracking-tight">
-                LaptopAdvisor<span className="text-white/40">.in</span>
-              </span>
-            </Link>
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/60">
-              India&apos;s most trusted laptop guide for JEE aspirants and
-              engineering students. Unbiased, student-first, always updated.
-            </p>
-          </div>
+      <div className="section-container relative py-12 sm:py-14">
+        <div className="mx-auto flex max-w-2xl flex-col items-center text-center">
+          <Link href="/" className="group inline-flex items-center gap-2.5">
+            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent shadow-lg shadow-primary/25 transition-transform group-hover:scale-105">
+              <Laptop className="h-5 w-5 text-white" />
+            </span>
+            <span className="text-xl font-extrabold tracking-tight">
+              LaptopAdvisor<span className="text-white/35">.in</span>
+            </span>
+          </Link>
 
-          <LinkColumn
-            title="Branches"
-            links={BRANCHES.slice(0, 6).map((b) => ({
-              label: b,
-              href: `/branch/${slugify(b)}`,
-            }))}
-          />
-          <LinkColumn
-            title="Colleges"
-            links={COLLEGES.slice(0, 6).map((c) => ({
-              label: c,
-              href: `/college/${slugify(c)}`,
-            }))}
-          />
-          <LinkColumn title="Resources" links={RESOURCES} />
-          <LinkColumn title="About" links={ABOUT} />
-        </div>
-
-        <div className="mt-12 flex flex-col gap-3 border-t border-white/10 pt-8 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-xs text-white/50">
-            © {new Date().getFullYear()} LaptopAdvisor.in — Engineering Laptop
-            Advisor India
+          <p className="mt-4 max-w-md text-sm leading-relaxed text-white/55 sm:text-[15px]">
+            Clear laptop picks for engineering students — no sponsored rankings,
+            no noise.
           </p>
-          <p className="text-xs text-white/40">
-            We may earn affiliate commissions. This never affects our
-            recommendations.
+
+          <Link
+            href="/finder/"
+            className="btn-shine mt-8 inline-flex min-h-[48px] items-center gap-2 rounded-full bg-gradient-to-r from-primary to-accent px-6 py-3 text-sm font-bold text-white shadow-lg shadow-primary/30 transition-all hover:shadow-xl hover:shadow-primary/40 active:scale-[0.98]"
+          >
+            Find My Laptop
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+
+          <nav
+            className="mt-10 flex flex-wrap items-center justify-center gap-x-1 gap-y-2"
+            aria-label="Footer"
+          >
+            {FOOTER_LINKS.map((item, i) => (
+              <span key={item.href} className="inline-flex items-center">
+                {i > 0 && (
+                  <span className="mx-2 text-white/20" aria-hidden>
+                    ·
+                  </span>
+                )}
+                <Link
+                  href={item.href}
+                  className="rounded-md px-1.5 py-1 text-sm text-white/55 transition-colors hover:text-white"
+                >
+                  {item.label}
+                </Link>
+              </span>
+            ))}
+          </nav>
+
+          <p className="mt-10 text-xs text-white/35">
+            © {new Date().getFullYear()} LaptopAdvisor.in
           </p>
         </div>
       </div>

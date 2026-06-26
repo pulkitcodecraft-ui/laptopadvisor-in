@@ -2,11 +2,8 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Laptop } from "lucide-react";
-import {
-  generateLaptopOutlineFallback,
-  resolveLaptopImageUrl,
-} from "@/lib/imageUtils";
+import PremiumLaptopSilhouette from "@/components/laptops/PremiumLaptopSilhouette";
+import { resolveLaptopImageUrl } from "@/lib/imageUtils";
 import { cn } from "@/lib/utils";
 
 interface LaptopImageProps {
@@ -18,6 +15,12 @@ interface LaptopImageProps {
   fill?: boolean;
   sizes?: string;
   priority?: boolean;
+  compact?: boolean;
+  presentation?: "default" | "card";
+}
+
+function PremiumCardFallback() {
+  return <PremiumLaptopSilhouette className="premium-card-fallback-icon" />;
 }
 
 export default function LaptopImage({
@@ -29,45 +32,93 @@ export default function LaptopImage({
   fill = false,
   sizes,
   priority = false,
+  compact = false,
+  presentation = "default",
 }: LaptopImageProps) {
+  const imageSrc = resolveLaptopImageUrl(src, nameOrSlug, width);
+  const hasImage = Boolean(imageSrc);
   const [loaded, setLoaded] = useState(false);
-  const [useFallback, setUseFallback] = useState(false);
+  const [failed, setFailed] = useState(false);
+  const isCard = presentation === "card";
 
-  const imageSrc = useFallback
-    ? generateLaptopOutlineFallback()
-    : resolveLaptopImageUrl(src, nameOrSlug, width);
+  const showFallback = !hasImage || failed;
 
-  const showOutlineIcon = useFallback && loaded;
+  if (isCard) {
+    return (
+      <div
+        className={cn(
+          "relative flex h-full w-full items-center justify-center",
+          className,
+        )}
+      >
+        {showFallback ? (
+          <PremiumCardFallback />
+        ) : (
+          <>
+            {!loaded && <PremiumCardFallback />}
+            <Image
+              src={imageSrc!}
+              alt={alt}
+              width={280}
+              height={196}
+              className={cn(
+                "premium-card-product-image object-contain transition-opacity duration-300",
+                loaded ? "opacity-100" : "absolute opacity-0",
+              )}
+              sizes={sizes ?? "(max-width: 680px) 90vw, 280px"}
+              priority={priority}
+              loading={priority ? undefined : "lazy"}
+              decoding="async"
+              onLoad={() => setLoaded(true)}
+              onError={() => {
+                setFailed(true);
+                setLoaded(true);
+              }}
+            />
+          </>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div
       className={cn(
-        "relative flex items-center justify-center overflow-hidden bg-gradient-to-b from-surface/80 to-card",
+        "relative flex items-center justify-center overflow-hidden",
+        "bg-gradient-to-b from-surface/90 to-card dark:from-surface/95 dark:to-card",
         fill && "h-full w-full",
         className,
       )}
     >
-      {!loaded && <div className="absolute inset-0 animate-shimmer" />}
-      {showOutlineIcon ? (
-        <div className="flex flex-col items-center gap-2 p-8 opacity-60">
-          <Laptop className="h-16 w-16 text-muted" strokeWidth={1.25} />
-          <span className="text-xs text-muted">Image unavailable</span>
-        </div>
+      {!loaded && !showFallback && (
+        <div className="absolute inset-0 animate-shimmer" />
+      )}
+
+      {showFallback ? (
+        <PremiumCardFallback />
       ) : (
         <Image
-          src={imageSrc}
+          src={imageSrc!}
           alt={alt}
           fill={fill}
           {...(fill ? {} : { width, height: Math.round(width * 0.75) })}
           className={cn(
-            "object-contain p-6 transition-opacity duration-300",
+            "object-contain object-center transition-opacity duration-300",
+            compact ? "p-2" : "p-5 sm:p-6",
             loaded ? "opacity-100" : "opacity-0",
           )}
-          sizes={sizes ?? (fill ? "100vw" : `${width}px`)}
+          sizes={
+            sizes ??
+            (fill
+              ? "(max-width: 768px) 100vw, 280px"
+              : `${width}px`)
+          }
           priority={priority}
+          loading={priority ? undefined : "lazy"}
+          decoding="async"
           onLoad={() => setLoaded(true)}
           onError={() => {
-            setUseFallback(true);
+            setFailed(true);
             setLoaded(true);
           }}
         />

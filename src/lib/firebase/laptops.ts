@@ -13,6 +13,8 @@ import {
 import { db, isFirebaseConfigured } from "@/lib/firebase/config";
 import { SAMPLE_LAPTOPS } from "@/lib/sampleLaptops";
 
+export type RamUpgradeable = "yes" | "no" | "partial";
+
 export interface LaptopSpecs {
   ram: string;
   storage: string;
@@ -21,6 +23,8 @@ export interface LaptopSpecs {
   display: string;
   battery: string;
   weight: string;
+  ramUpgradeable?: RamUpgradeable;
+  ramUpgradeNote?: string;
 }
 
 export interface Laptop {
@@ -38,6 +42,9 @@ export interface Laptop {
   branches: string[];
   budgetRange: string;
   updatedAt: Date;
+  description?: string;
+  priceLabel?: string;
+  priceSource?: string;
 }
 
 export interface LaptopFilters {
@@ -62,12 +69,15 @@ function mapDoc(id: string, data: Record<string, unknown>): Laptop {
     isRecommended: (data.isRecommended as boolean) ?? false,
     branches: (data.branches as string[]) ?? [],
     budgetRange: data.budgetRange as string,
+    description: data.description as string | undefined,
+    priceLabel: data.priceLabel as string | undefined,
+    priceSource: data.priceSource as string | undefined,
     updatedAt: updatedAt?.toDate() ?? new Date(),
   };
 }
 
-function filterSampleLaptops(filters?: LaptopFilters): Laptop[] {
-  let results = [...SAMPLE_LAPTOPS];
+function applyFilters(laptops: Laptop[], filters?: LaptopFilters): Laptop[] {
+  let results = [...laptops];
 
   if (filters?.branch) {
     results = results.filter((l) => l.branches.includes(filters.branch!));
@@ -76,34 +86,48 @@ function filterSampleLaptops(filters?: LaptopFilters): Laptop[] {
     results = results.filter((l) => l.budgetRange === filters.budget);
   }
   if (filters?.gaming === "regular") {
-    results = results.filter((l) =>
-      l.tags.some((t) => t.toLowerCase().includes("gaming") || l.specs.gpu !== "Integrated"),
+    results = results.filter(
+      (l) =>
+        l.tags.some((t) => t.toLowerCase().includes("gaming")) ||
+        (l.specs.gpu !== "Integrated" &&
+          l.specs.gpu !== "—" &&
+          !l.specs.gpu.toLowerCase().includes("integrated")),
     );
   }
 
   return results;
 }
 
+function filterSampleLaptops(filters?: LaptopFilters): Laptop[] {
+  return applyFilters(SAMPLE_LAPTOPS, filters);
+}
+
 export async function getLaptops(filters?: LaptopFilters): Promise<Laptop[]> {
+  const catalog = filterSampleLaptops(filters);
+
   if (!isFirebaseConfigured() || !db) {
-    return filterSampleLaptops(filters);
+    return catalog;
   }
 
   try {
     const q = query(collection(db, "laptops"), orderBy("updatedAt", "desc"));
     const snapshot = await getDocs(q);
-    let laptops = snapshot.docs.map((d) => mapDoc(d.id, d.data()));
+    const remote = snapshot.docs.map((d) => mapDoc(d.id, d.data()));
 
-    if (filters?.branch) {
-      laptops = laptops.filter((l) => l.branches.includes(filters.branch!));
-    }
-    if (filters?.budget) {
-      laptops = laptops.filter((l) => l.budgetRange === filters.budget);
+    if (!remote.length || remote.length < catalog.length) {
+      return catalog;
     }
 
-    return laptops.length ? laptops : filterSampleLaptops(filters);
+    const merged = new Map(catalog.map((l) => [l.slug, l]));
+    for (const laptop of remote) {
+      if (merged.has(laptop.slug)) {
+        merged.set(laptop.slug, { ...merged.get(laptop.slug)!, ...laptop });
+      }
+    }
+
+    return applyFilters([...merged.values()], filters);
   } catch {
-    return filterSampleLaptops(filters);
+    return catalog;
   }
 }
 

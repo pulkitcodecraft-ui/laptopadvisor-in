@@ -29,7 +29,7 @@ const variantStyles: Record<ButtonVariant, string> = {
 const sizeStyles: Record<ButtonSize, string> = {
   sm: "px-4 py-2 text-sm min-h-[40px] rounded-full",
   md: "px-5 py-2.5 text-sm min-h-[44px] rounded-full",
-  lg: "px-7 py-3.5 text-base min-h-[52px] rounded-full",
+  lg: "px-7 py-3.5 text-base font-bold min-h-[52px] rounded-full tracking-tight",
 };
 
 export default function Button({

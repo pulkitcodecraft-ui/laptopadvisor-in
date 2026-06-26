@@ -74,8 +74,6 @@ function initFirebase() {
   connectEmulators(app);
 }
 
-initFirebase();
-
 export function getFirebaseApp(): FirebaseApp | null {
   if (!app && typeof window !== "undefined") initFirebase();
   return app;

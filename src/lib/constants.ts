@@ -56,12 +56,11 @@ export const BUDGET_RANGES = [
 export type BudgetRange = (typeof BUDGET_RANGES)[number]["value"];
 
 export const NAV_LINKS = [
-  { label: "Home", href: "/" },
-  { label: "Find My Laptop", href: "/finder" },
-  { label: "Compare", href: "/compare" },
-  { label: "Guides", href: "/guides" },
-  { label: "Deals", href: "/deals" },
+  { label: "Laptops", href: "/laptops" },
+  { label: "Student Offers", href: "#", comingSoon: true },
 ] as const;
+
+export type NavLink = (typeof NAV_LINKS)[number];
 
 export function slugify(text: string): string {
   return text

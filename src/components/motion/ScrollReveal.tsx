@@ -1,8 +1,13 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
-import type { ReactNode } from "react";
-import { scrollFadeVariants, sectionFadeVariants } from "@/lib/motion";
+import {
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+  type ElementType,
+  type ReactNode,
+} from "react";
 import { cn } from "@/lib/utils";
 
 type ScrollRevealProps = {
@@ -13,6 +18,16 @@ type ScrollRevealProps = {
   variant?: "item" | "section";
 };
 
+function subscribeReducedMotion(onStoreChange: () => void) {
+  const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+  media.addEventListener("change", onStoreChange);
+  return () => media.removeEventListener("change", onStoreChange);
+}
+
+function getReducedMotionSnapshot() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
 export default function ScrollReveal({
   children,
   className,
@@ -20,16 +35,43 @@ export default function ScrollReveal({
   as = "div",
   variant = "item",
 }: ScrollRevealProps) {
-  const reducedMotion = useReducedMotion() ?? false;
-  const MotionTag = motion[as];
-  const motionProps =
-    variant === "section"
-      ? sectionFadeVariants(reducedMotion)
-      : scrollFadeVariants(index, reducedMotion);
+  const ref = useRef<HTMLElement>(null);
+  const [revealed, setRevealed] = useState(false);
+  const prefersReducedMotion = useSyncExternalStore(
+    subscribeReducedMotion,
+    getReducedMotionSnapshot,
+    () => false,
+  );
+  const visible = prefersReducedMotion || revealed;
+  const Tag = as as ElementType;
+
+  useEffect(() => {
+    if (prefersReducedMotion) return;
+
+    const node = ref.current;
+    if (!node) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setRevealed(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: variant === "section" ? 0.08 : 0.12, rootMargin: "0px 0px -4% 0px" },
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [prefersReducedMotion, variant]);
 
   return (
-    <MotionTag {...motionProps} className={cn(className)}>
+    <Tag
+      ref={ref}
+      className={cn("scroll-reveal", visible && "scroll-reveal-visible", className)}
+      style={{ transitionDelay: visible ? `${Math.min(index, 8) * 45}ms` : undefined }}
+    >
       {children}
-    </MotionTag>
+    </Tag>
   );
 }

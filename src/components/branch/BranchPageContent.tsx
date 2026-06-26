@@ -7,7 +7,7 @@ import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import LaptopCard from "@/components/ui/LaptopCard";
 import type { BranchGuide } from "@/lib/branchData";
-import { findLaptopByName } from "@/lib/sampleLaptops";
+import { findLaptopBySlug } from "@/lib/sampleLaptops";
 
 export default function BranchPageContent({ branch }: { branch: BranchGuide }) {
   const osBadgeVariant =
@@ -16,6 +16,12 @@ export default function BranchPageContent({ branch }: { branch: BranchGuide }) {
       : branch.recommendedOS === "Windows"
         ? "blue"
         : "green";
+
+  const recommended = branch.recommendedLaptops
+    .map((pick) => ({ pick, catalog: findLaptopBySlug(pick.slug) }))
+    .filter((entry): entry is typeof entry & { catalog: NonNullable<typeof entry.catalog> } =>
+      Boolean(entry.catalog),
+    );
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
@@ -92,26 +98,24 @@ export default function BranchPageContent({ branch }: { branch: BranchGuide }) {
           <h2 className="mb-6 text-xl font-bold text-text">Recommended Laptops</h2>
         </ScrollReveal>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {branch.recommendedLaptops.map((laptop, index) => {
-            const sample = findLaptopByName(laptop.name);
-            return (
-              <ScrollReveal key={laptop.name} index={index + 8}>
-                <LaptopCard
-                  name={laptop.name}
-                  brand={sample?.brand ?? laptop.name.split(" ")[0]}
-                  price={sample?.price ?? 0}
-                  priceLabel={sample?.price ? undefined : laptop.priceRange}
-                  image={sample?.image ?? ""}
-                  rating={sample?.rating ?? 4.3}
-                  tags={sample?.tags ?? [laptop.priceRange]}
-                  affiliateUrl={laptop.affiliateUrl}
-                  isRecommended={index === 0}
-                  specs={sample?.specs}
-                  description={laptop.reason}
-                />
-              </ScrollReveal>
-            );
-          })}
+          {recommended.map(({ pick, catalog }, index) => (
+            <ScrollReveal key={catalog.id} index={index + 8}>
+              <LaptopCard
+                name={catalog.name}
+                brand={catalog.brand}
+                price={catalog.price}
+                priceLabel={catalog.priceLabel}
+                image={catalog.image}
+                rating={catalog.rating}
+                tags={catalog.tags}
+                affiliateUrl={catalog.affiliateUrl}
+                isRecommended={index === 0}
+                specs={catalog.specs}
+                description={pick.reason}
+                priceSource={catalog.priceSource}
+              />
+            </ScrollReveal>
+          ))}
         </div>
       </section>
 

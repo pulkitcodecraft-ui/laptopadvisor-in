@@ -1,8 +1,6 @@
 export interface BranchLaptop {
-  name: string;
+  slug: string;
   reason: string;
-  priceRange: string;
-  affiliateUrl: string;
 }
 
 export interface BranchGuide {
@@ -54,22 +52,16 @@ export const BRANCH_DATA: BranchGuide[] = [
       "Get 16GB RAM and a good keyboard. You'll type more than you game. A ₹60,000–₹80,000 laptop with solid build quality beats a flashy gaming rig for CS.",
     recommendedLaptops: [
       {
-        name: "Lenovo IdeaPad Slim 5",
+        slug: "ideapad-slim-3",
         reason: "Excellent value for coding with 16GB RAM and good keyboard.",
-        priceRange: "₹55,000–₹65,000",
-        affiliateUrl: "https://www.amazon.in",
       },
       {
-        name: "Apple MacBook Air M2",
+        slug: "apple-macbook-air-13-m5",
         reason: "Best battery and build for CS students who can afford it.",
-        priceRange: "₹90,000–₹1,10,000",
-        affiliateUrl: "https://www.amazon.in",
       },
       {
-        name: "ASUS Vivobook 16",
-        reason: "Large screen for split-pane coding at a mid-range price.",
-        priceRange: "₹50,000–₹60,000",
-        affiliateUrl: "https://www.amazon.in",
+        slug: "asus-vivobook-s16",
+        reason: "Large OLED screen for split-pane coding at a mid-range price.",
       },
     ],
   },
@@ -103,22 +95,16 @@ export const BRANCH_DATA: BranchGuide[] = [
       "Prioritize GPU and cooling over portability. A ₹70,000–₹90,000 laptop with RTX 3050/4050 and 16GB RAM is the sweet spot for mechanical students.",
     recommendedLaptops: [
       {
-        name: "HP Victus 15",
+        slug: "hp-victus-15-ryzen-5-rtx-3050",
         reason: "Dedicated GPU for CAD at a student-friendly price.",
-        priceRange: "₹60,000–₹75,000",
-        affiliateUrl: "https://www.amazon.in",
       },
       {
-        name: "Lenovo LOQ 15",
+        slug: "lenovo-loq-15-rtx-3050a",
         reason: "Good thermals for long simulation sessions.",
-        priceRange: "₹70,000–₹85,000",
-        affiliateUrl: "https://www.amazon.in",
       },
       {
-        name: "Dell G15",
-        reason: "Reliable build with strong service network in India.",
-        priceRange: "₹65,000–₹80,000",
-        affiliateUrl: "https://www.amazon.in",
+        slug: "acer-aspire-7-gaming",
+        reason: "Affordable RTX 3050 with upgradeable RAM and wide service network.",
       },
     ],
   },
@@ -153,22 +139,16 @@ export const BRANCH_DATA: BranchGuide[] = [
       "Get at least 16GB RAM, 512GB SSD, and a 15-inch screen. You don't need a gaming GPU, but integrated graphics alone may struggle with Revit.",
     recommendedLaptops: [
       {
-        name: "Lenovo IdeaPad Slim 5",
+        slug: "ideapad-slim-3",
         reason: "Balanced specs for AutoCAD without overspending.",
-        priceRange: "₹55,000–₹65,000",
-        affiliateUrl: "https://www.amazon.in",
       },
       {
-        name: "ASUS VivoBook Pro 15",
+        slug: "asus-vivobook-s16",
         reason: "OLED display makes CAD work easier on the eyes.",
-        priceRange: "₹65,000–₹80,000",
-        affiliateUrl: "https://www.amazon.in",
       },
       {
-        name: "HP Pavilion 15",
-        reason: "Solid all-rounder with good HP service centers.",
-        priceRange: "₹50,000–₹60,000",
-        affiliateUrl: "https://www.amazon.in",
+        slug: "asus-vivobook-15",
+        reason: "Solid all-rounder with good ASUS service coverage.",
       },
     ],
   },
@@ -203,22 +183,16 @@ export const BRANCH_DATA: BranchGuide[] = [
       "A lightweight 15-inch laptop with 16GB RAM and 8+ hours battery beats a powerful desktop replacement you'll dread carrying.",
     recommendedLaptops: [
       {
-        name: "Lenovo IdeaPad Slim 5",
+        slug: "ideapad-slim-3",
         reason: "Light enough for daily lab commutes with solid performance.",
-        priceRange: "₹55,000–₹65,000",
-        affiliateUrl: "https://www.amazon.in",
       },
       {
-        name: "ASUS Zenbook 14",
+        slug: "asus-vivobook-s14",
         reason: "Premium portability with all-day battery for lab days.",
-        priceRange: "₹70,000–₹85,000",
-        affiliateUrl: "https://www.amazon.in",
       },
       {
-        name: "Acer Aspire 5",
-        reason: "Budget-friendly option that handles MATLAB well.",
-        priceRange: "₹45,000–₹55,000",
-        affiliateUrl: "https://www.amazon.in",
+        slug: "motorola-moto-book-60",
+        reason: "Budget-friendly option with OLED display and 16GB RAM.",
       },
     ],
   },
@@ -253,22 +227,16 @@ export const BRANCH_DATA: BranchGuide[] = [
       "Make sure you have enough USB-A ports or carry a hub. 16GB RAM and an i5/Ryzen 5 from the last two generations is the practical minimum.",
     recommendedLaptops: [
       {
-        name: "Lenovo ThinkPad E14",
-        reason: "Great port selection and Linux-friendly hardware.",
-        priceRange: "₹55,000–₹70,000",
-        affiliateUrl: "https://www.amazon.in",
+        slug: "motorola-moto-book-60",
+        reason: "Great port selection and strong everyday performance.",
       },
       {
-        name: "HP Pavilion 15",
+        slug: "asus-vivobook-15",
         reason: "Reliable for Multisim and everyday lab work.",
-        priceRange: "₹50,000–₹60,000",
-        affiliateUrl: "https://www.amazon.in",
       },
       {
-        name: "ASUS Vivobook 15",
+        slug: "ideapad-slim-3",
         reason: "Budget option that handles ECE software adequately.",
-        priceRange: "₹45,000–₹55,000",
-        affiliateUrl: "https://www.amazon.in",
       },
     ],
   },
@@ -304,22 +272,16 @@ export const BRANCH_DATA: BranchGuide[] = [
       "If budget allows, get an RTX 4050/4060 laptop. If not, get 16GB+ RAM and use Google Colab for GPU tasks — don't pretend your integrated graphics will train ResNet.",
     recommendedLaptops: [
       {
-        name: "ASUS TUF A15",
+        slug: "asus-tuf-gaming-a15",
         reason: "RTX GPU for local training at a reasonable price.",
-        priceRange: "₹75,000–₹90,000",
-        affiliateUrl: "https://www.amazon.in",
       },
       {
-        name: "Apple MacBook Air M2",
+        slug: "apple-macbook-air-13-m5",
         reason: "Excellent for learning ML concepts and light models.",
-        priceRange: "₹90,000–₹1,10,000",
-        affiliateUrl: "https://www.amazon.in",
       },
       {
-        name: "Lenovo LOQ 15",
+        slug: "lenovo-loq-15-rtx-3050a",
         reason: "Best bang-for-buck GPU laptop for AI coursework.",
-        priceRange: "₹70,000–₹85,000",
-        affiliateUrl: "https://www.amazon.in",
       },
     ],
   },
@@ -355,22 +317,16 @@ export const BRANCH_DATA: BranchGuide[] = [
       "16GB RAM minimum, 32GB if you can afford it. A fast SSD matters more than a dedicated GPU for 90% of data science coursework.",
     recommendedLaptops: [
       {
-        name: "Lenovo IdeaPad Slim 5",
+        slug: "ideapad-slim-3",
         reason: "16GB RAM variant is perfect for pandas workloads.",
-        priceRange: "₹55,000–₹65,000",
-        affiliateUrl: "https://www.amazon.in",
       },
       {
-        name: "Apple MacBook Air M2",
+        slug: "apple-macbook-air-13-m5",
         reason: "Silent, fast, and great for Python data stacks.",
-        priceRange: "₹90,000–₹1,10,000",
-        affiliateUrl: "https://www.amazon.in",
       },
       {
-        name: "ASUS Vivobook 16",
+        slug: "asus-vivobook-s16",
         reason: "Large screen helps with data visualization work.",
-        priceRange: "₹50,000–₹60,000",
-        affiliateUrl: "https://www.amazon.in",
       },
     ],
   },
@@ -404,22 +360,16 @@ export const BRANCH_DATA: BranchGuide[] = [
       "16GB RAM and 512GB SSD are the practical baseline. You don't need a gaming GPU unless you also game — integrated graphics is fine for most chemical eng software.",
     recommendedLaptops: [
       {
-        name: "Lenovo IdeaPad Slim 5",
+        slug: "ideapad-slim-3",
         reason: "Balanced specs for MATLAB and simulation at a student price.",
-        priceRange: "₹55,000–₹65,000",
-        affiliateUrl: "https://www.amazon.in",
       },
       {
-        name: "HP Pavilion 15",
+        slug: "asus-vivobook-15",
         reason: "Reliable all-rounder with good service network.",
-        priceRange: "₹50,000–₹60,000",
-        affiliateUrl: "https://www.amazon.in",
       },
       {
-        name: "ASUS Vivobook 15",
-        reason: "Budget-friendly option for everyday chemical eng coursework.",
-        priceRange: "₹45,000–₹55,000",
-        affiliateUrl: "https://www.amazon.in",
+        slug: "motorola-moto-book-60",
+        reason: "Strong value for everyday chemical eng coursework.",
       },
     ],
   },
@@ -454,22 +404,16 @@ export const BRANCH_DATA: BranchGuide[] = [
       "A lightweight laptop with 16GB RAM, good keyboard, and all-day battery beats a bulky workstation. Linux-friendly hardware is a bonus if your lab uses open-source stacks.",
     recommendedLaptops: [
       {
-        name: "Apple MacBook Air M2",
+        slug: "apple-macbook-air-13-m5",
         reason: "Excellent for Python, research writing, and long battery life.",
-        priceRange: "₹90,000–₹1,10,000",
-        affiliateUrl: "https://www.amazon.in",
       },
       {
-        name: "Lenovo ThinkPad E14",
-        reason: "Durable, Linux-friendly, and great for daily lab carry.",
-        priceRange: "₹55,000–₹70,000",
-        affiliateUrl: "https://www.amazon.in",
+        slug: "asus-vivobook-s14",
+        reason: "Portable with strong CPU for daily lab carry.",
       },
       {
-        name: "Lenovo IdeaPad Slim 5",
+        slug: "ideapad-slim-3",
         reason: "Strong value for MATLAB and Python workloads.",
-        priceRange: "₹55,000–₹65,000",
-        affiliateUrl: "https://www.amazon.in",
       },
     ],
   },
@@ -503,22 +447,16 @@ export const BRANCH_DATA: BranchGuide[] = [
       "RTX 3050/4050 with 16GB RAM is the practical floor for aerospace coursework. Use college labs for the heaviest simulations if budget is tight.",
     recommendedLaptops: [
       {
-        name: "HP Victus 15",
+        slug: "hp-victus-15-ryzen-5-rtx-3050",
         reason: "Dedicated GPU for CAD and simulation at a student price.",
-        priceRange: "₹60,000–₹75,000",
-        affiliateUrl: "https://www.amazon.in",
       },
       {
-        name: "Lenovo LOQ 15",
+        slug: "lenovo-loq-15-rtx-3050a",
         reason: "Good thermals for long ANSYS sessions.",
-        priceRange: "₹70,000–₹85,000",
-        affiliateUrl: "https://www.amazon.in",
       },
       {
-        name: "Dell G15",
-        reason: "Reliable build with strong service network in India.",
-        priceRange: "₹65,000–₹80,000",
-        affiliateUrl: "https://www.amazon.in",
+        slug: "acer-aspire-7-gaming",
+        reason: "Affordable RTX 3050 with upgradeable RAM and wide service network.",
       },
     ],
   },
@@ -552,22 +490,16 @@ export const BRANCH_DATA: BranchGuide[] = [
       "15–16 inch screen, 16GB RAM minimum, RTX 3050 or better, and 512GB+ SSD. Prioritize display size and GPU over ultra-lightweight design — studio work is visual.",
     recommendedLaptops: [
       {
-        name: "ASUS VivoBook Pro 15",
-        reason: "OLED display and dedicated GPU for Revit and rendering.",
-        priceRange: "₹65,000–₹80,000",
-        affiliateUrl: "https://www.amazon.in",
+        slug: "asus-vivobook-s16",
+        reason: "OLED display and solid CPU for Revit and rendering.",
       },
       {
-        name: "HP Victus 15",
+        slug: "hp-victus-15-ryzen-5-rtx-3050",
         reason: "Strong GPU for Lumion at a reasonable student price.",
-        priceRange: "₹60,000–₹75,000",
-        affiliateUrl: "https://www.amazon.in",
       },
       {
-        name: "Lenovo LOQ 15",
+        slug: "lenovo-loq-15-rtx-3050a",
         reason: "Large screen and good thermals for long studio sessions.",
-        priceRange: "₹70,000–₹85,000",
-        affiliateUrl: "https://www.amazon.in",
       },
     ],
   },
@@ -602,22 +534,16 @@ export const BRANCH_DATA: BranchGuide[] = [
       "16GB RAM, fast SSD, and a comfortable keyboard beat expensive graphics. Mac or Windows both work — pick based on what your lab standardizes on.",
     recommendedLaptops: [
       {
-        name: "Lenovo IdeaPad Slim 5",
+        slug: "ideapad-slim-3",
         reason: "16GB RAM ideal for R and Python data analysis.",
-        priceRange: "₹55,000–₹65,000",
-        affiliateUrl: "https://www.amazon.in",
       },
       {
-        name: "Apple MacBook Air M2",
+        slug: "apple-macbook-air-13-m5",
         reason: "Silent and reliable for research and writing-heavy semesters.",
-        priceRange: "₹90,000–₹1,10,000",
-        affiliateUrl: "https://www.amazon.in",
       },
       {
-        name: "ASUS Vivobook 15",
+        slug: "asus-vivobook-15",
         reason: "Budget option that handles biotech software adequately.",
-        priceRange: "₹45,000–₹55,000",
-        affiliateUrl: "https://www.amazon.in",
       },
     ],
   },

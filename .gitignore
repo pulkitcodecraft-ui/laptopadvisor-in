@@ -20,7 +20,8 @@
 # production
 /build
 
-# misc
+# misc imports (keep JSON catalog, ignore bulky image staging)
+_import/images/
 .DS_Store
 *.pem
 

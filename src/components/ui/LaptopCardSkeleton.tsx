@@ -1,4 +1,5 @@
 import type { LaptopSpecs } from "@/lib/firebase/laptops";
+import { RamUpgradeBadge } from "@/components/ui/RamUpgradeBadge";
 
 export function LaptopCardSkeleton() {
   return (
@@ -41,24 +42,32 @@ export function LaptopSpecGrid({ specs }: SpecGridProps) {
   const items = [
     { label: "CPU", value: specs.processor },
     { label: "Display", value: specs.display },
-    { label: "RAM", value: specs.ram },
+    { label: "RAM", value: specs.ram.replace(/\*$/, "") },
     { label: "Battery", value: specs.battery },
     { label: "Storage", value: specs.storage },
     { label: "Weight", value: specs.weight },
   ];
 
   return (
-    <div className="grid grid-cols-2 gap-x-4 gap-y-3 border-y border-border py-4">
-      {items.map(({ label, value }) => (
-        <div key={label}>
-          <p className="text-[10px] font-bold uppercase tracking-wider text-muted">
-            {label}
-          </p>
-          <p className="mt-0.5 text-sm font-semibold leading-snug text-text">
-            {value}
-          </p>
-        </div>
-      ))}
+    <div className="space-y-3 border-y border-border py-4">
+      <div className="grid grid-cols-2 gap-x-4 gap-y-3">
+        {items.map(({ label, value }) => (
+          <div key={label}>
+            <p className="text-[10px] font-bold uppercase tracking-wider text-muted">
+              {label}
+            </p>
+            <p className="mt-0.5 text-sm font-semibold leading-snug text-text">
+              {value}
+            </p>
+          </div>
+        ))}
+      </div>
+      {specs.ramUpgradeable && (
+        <RamUpgradeBadge
+          upgradeable={specs.ramUpgradeable}
+          note={specs.ramUpgradeNote}
+        />
+      )}
     </div>
   );
 }
